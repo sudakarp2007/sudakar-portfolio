@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sudakar | Frontend Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark: #0d0b14;
+      --bg-card: #13111f;
+      --bg-card2: #1a1728;
+      --pink: #e8488a;
+      --orange: #f97316;
+      --cyan: #38bdf8;
+      --purple: #a855f7;
+      --text: #e2e0ef;
+      --muted: #7a7a9a;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+ 
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(13,11,20,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.4rem; color: #fff; }
+    .logo span { color: var(--pink); }
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.95rem; transition: color .2s; }
+    nav ul a:hover { color: #fff; }
+
+ 
+    #home {
+      min-height: 100vh;
+      padding: 140px 60px 80px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+      background:
+        radial-gradient(ellipse 60% 60% at 10% 40%, rgba(80,20,120,0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 90% 80%, rgba(20,60,100,0.3) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--purple); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .badge::before { content: '✦'; font-size: 0.85rem; }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .italic-pink {
+      font-style: italic;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .orange-text { color: var(--orange); }
+    .hero-desc { color: var(--muted); font-size: 1rem; line-height: 1.75; max-width: 520px; margin: 24px 0 36px; }
+
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 26px; border-radius: 50px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #e8488a, #f97316);
+      color: #fff; font-weight: 600; font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: opacity .2s, transform .2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-secondary {
+      padding: 14px 26px; border-radius: 50px; cursor: pointer;
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.2);
+      color: #fff; font-weight: 600; font-size: 0.95rem;
+      transition: border-color .2s, background .2s;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+   
+    .hero-card {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .hero-card-img {
+      width: 100%; height: 220px;
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+      position: relative;
+    }
+    .avail-box {
+      position: absolute; bottom: 16px; left: 16px; right: 16px;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(8px);
+      border-radius: 12px; padding: 14px 16px;
+    }
+    .avail-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 4px; }
+    .avail-text { font-weight: 700; color: #fff; font-size: 0.95rem; }
+    .hero-card-body { padding: 22px 22px 26px; }
+    .hero-name { font-weight: 700; font-size: 1.15rem; color: #fff; margin-bottom: 4px; }
+    .hero-role { color: var(--muted); font-size: 0.85rem; margin-bottom: 14px; }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag {
+      padding: 5px 12px; border-radius: 20px;
+      background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--text);
+    }
+    .hero-card-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
+ 
+    .stats-section {
+      padding: 60px 60px 80px;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 50%, rgba(20,60,100,0.25) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .stat-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 28px;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem; font-weight: 800; margin-bottom: 8px;
+    }
+    .stat-num.pink { color: var(--pink); }
+    .stat-num.cyan { color: var(--cyan); }
+    .stat-num.purple { color: var(--purple); }
+    .stat-label { color: var(--muted); font-size: 0.9rem; }
+
+ 
+    section { padding: 100px 60px; }
+    .section-tag {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.15; color: #fff;
+      margin-bottom: 20px;
+    }
+    .c-pink { color: var(--pink); }
+    .c-purple { color: var(--purple); }
+    .c-cyan { color: var(--cyan); }
+    .c-orange { color: var(--orange); }
+    .section-desc { color: var(--muted); font-size: 1rem; line-height: 1.75; max-width: 680px; }
+
+  
+    #about {
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 30%, rgba(20,60,100,0.3) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+    .about-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px;
+    }
+    .about-card h3 { font-weight: 700; font-size: 1.2rem; color: #fff; margin-bottom: 14px; }
+    .about-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+    .meta-row { display: flex; gap: 32px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .meta-item label { display: block; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .meta-item span { font-weight: 700; font-size: 0.9rem; color: #fff; }
+
+    .working-style-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px;
+    }
+    .ws-tag { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+    .ws-title { font-weight: 700; font-size: 1.15rem; color: #fff; margin-bottom: 24px; }
+    .step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px; }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: #fff;
+    }
+    .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; padding-top: 5px; }
+
+    #skills {
+      background:
+        radial-gradient(ellipse 50% 60% at 10% 60%, rgba(80,20,120,0.3) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+    .skill-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 28px;
+      transition: border-color .2s, transform .2s;
+    }
+    .skill-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-2px); }
+    .skill-icon {
+      width: 52px; height: 52px; border-radius: 12px; margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 800; color: #fff;
+    }
+    .icon-pink { background: linear-gradient(135deg, #a855f7, #ec4899); }
+    .icon-cyan { background: linear-gradient(135deg, #38bdf8, #818cf8); }
+    .skill-card h3 { font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: 10px; }
+    .skill-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+    #projects {
+      background:
+        radial-gradient(ellipse 50% 60% at 90% 40%, rgba(20,60,100,0.25) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+    .project-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
+      transition: transform .25s, border-color .25s;
+    }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
+    .project-thumb {
+      width: 100%; height: 200px; position: relative; cursor: pointer;
+    }
+    .project-thumb .arrow {
+      position: absolute; bottom: 14px; right: 14px;
+      width: 34px; height: 34px; background: rgba(255,255,255,0.2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: #fff;
+    }
+    .thumb-pink { background: linear-gradient(135deg, #a855f7 0%, #ec4899 55%, #f97316 100%); }
+    .thumb-blue { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); }
+    .project-body { padding: 24px; }
+    .project-type { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .project-name { font-weight: 700; font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
+    .project-desc { color: var(--muted); font-size: 0.87rem; line-height: 1.65; margin-bottom: 16px; }
+
+    #services {
+      background:
+        radial-gradient(ellipse 60% 60% at 10% 50%, rgba(80,20,120,0.25) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .service-card {
+      background: var(--bg-card2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 28px;
+      transition: border-color .2s;
+    }
+    .service-card:hover { border-color: rgba(168,85,247,0.35); }
+    .svc-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 800; color: var(--pink); margin-bottom: 20px;
+    }
+    .service-card h3 { font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 10px; }
+    .service-card p { color: var(--muted); font-size: 0.87rem; line-height: 1.65; }
+
+
+    #contact {
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 60%, rgba(20,60,100,0.3) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+    .contact-card {
+      background: linear-gradient(135deg, rgba(30,15,60,0.92) 0%, rgba(80,20,80,0.45) 100%);
+      border: 1px solid var(--border);
+      border-radius: 22px; padding: 60px 52px;
+      max-width: 920px;
+    }
+    .contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+      font-weight: 800; line-height: 1.2; color: #fff; margin-bottom: 22px;
+    }
+    .contact-desc { color: var(--muted); font-size: 0.96rem; line-height: 1.75; max-width: 640px; margin-bottom: 36px; }
+    .contact-links { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 22px; min-width: 240px;
+      text-decoration: none; transition: background .2s, border-color .2s;
+      cursor: pointer;
+    }
+    .contact-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
+    .cl-icon { font-size: 1.3rem; }
+    .cl-icon.email { color: var(--purple); }
+    .cl-icon.linkedin { color: var(--cyan); font-weight: 700; font-size: 1rem; }
+    .cl-meta label { display: block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .cl-meta span { font-weight: 600; font-size: 0.9rem; color: #fff; }
+    .availability { font-size: 0.9rem; color: var(--muted); }
+    .availability strong { color: #fff; }
+
+  
+    footer {
+      padding: 28px 60px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--muted); font-size: 0.82rem;
+    }
+    .footer-logo { font-weight: 700; color: #fff; font-size: 1rem; }
+    .footer-logo span { color: var(--pink); }
+
+    @media (max-width: 960px) {
+      nav { padding: 16px 24px; }
+      #home { grid-template-columns: 1fr; padding: 120px 24px 60px; }
+      .hero-card { max-width: 420px; }
+      .stats-section { padding: 40px 24px 60px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      section { padding: 70px 24px; }
+      .about-grid, .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .contact-card { padding: 36px 24px; }
+      footer { flex-direction: column; gap: 10px; padding: 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Sudakar P<span></span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+
+<section id="home">
+  <div class="hero-left">
+    <div class="badge">Frontend Portfolio</div>
+    <h1 class="hero-title">
+      Clean interfaces,<br>
+      responsive<br>
+      layouts, and<br>
+      websites that<br>
+      <span class="italic-pink">feel easy to</span><br>
+      <span class="orange-text">trust.</span>
+    </h1>
+    <p class="hero-desc">I am Sudakar, a frontend-focused developer who enjoys shaping simple ideas into polished, user-friendly web pages with strong layout, visual rhythm, and clarity.</p>
+    <div class="btn-row">
+      <a href="#projects" class="btn-primary">View Projects ↗</a>
+      <a href="#contact" class="btn-secondary">Let's Connect</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="hero-card-img">
+      <div class="avail-box">
+        <div class="avail-label">Available For</div>
+        <div class="avail-text">Portfolios, landing pages, and UI refinement</div>
+      </div>
+    </div>
+    <div class="hero-card-body">
+      <div class="hero-name">Sudakar P</div>
+      <div class="hero-role">Frontend Developer</div>
+      <div class="tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">Responsive UI</span>
+        <span class="tag">Design polish</span>
+      </div>
+      <p class="hero-card-desc">I like interfaces that look modern without feeling noisy, with structure first and styling that supports the content instead of distracting from it.</p>
+    </div>
+  </div>
+</section>
+
+
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num pink">12+</div>
+      <div class="stat-label">Projects built</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num cyan">2+</div>
+      <div class="stat-label">Years learning and building</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num purple">100%</div>
+      <div class="stat-label">Responsive-first approach</div>
+    </div>
+  </div>
+</div>
+
+
+<section id="about">
+  <div class="section-tag">About</div>
+  <h2 class="section-title">
+    A designer-minded developer who<br>
+    values <span class="c-pink">clarity, spacing, and flow.</span>
+  </h2>
+  <p class="section-desc">I enjoy building websites that guide people naturally through the page. My focus is on clean structure, readable typography, responsive layouts, and details that make a site feel finished.</p>
+  <p class="section-desc" style="margin-top:14px;">I enjoy the overlap between design thinking and frontend implementation, especially when the end result needs to look sharp and feel effortless to use.</p>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>What I bring</h3>
+      <p>Whether it is a personal portfolio or a focused landing page, I aim for layouts that feel professional, direct, and easy to explore on any screen size.</p>
+      <div class="meta-row">
+        <div class="meta-item">
+          <label>Location</label>
+          <span>India</span>
+        </div>
+        <div class="meta-item">
+          <label>Focus</label>
+          <span>Frontend Dev</span>
+        </div>
+        <div class="meta-item">
+          <label>Strength</label>
+          <span>Responsive UI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="working-style-card">
+      <div class="ws-tag">Working Style</div>
+      <div class="ws-title">Simple process, thoughtful finish</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <p>Start with hierarchy and content flow before decoration.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p>Build layouts that adapt smoothly across desktop, tablet, and mobile.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p>Refine spacing, contrast, and sections until the page feels balanced.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="skills">
+  <div class="section-tag">Skills</div>
+  <h2 class="section-title">
+    Tools and strengths that help me<br>
+    move from concept to <span class="c-cyan">launch-ready</span><br>
+    <span class="c-purple">page.</span>
+  </h2>
+  <p class="section-desc">I enjoy the overlap between design thinking and frontend implementation, especially when the end result needs to look sharp and feel effortless to use.</p>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon icon-pink">01</div>
+      <h3>Semantic HTML</h3>
+      <p>Clear page structure with accessible headings, sections, links, and readable content flow.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon icon-cyan">02</div>
+      <h3>Modern CSS</h3>
+      <p>Responsive layouts with Flexbox, Grid, fluid spacing, and strong visual hierarchy.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon icon-pink">03</div>
+      <h3>JavaScript Basics</h3>
+      <p>Simple interactivity, cleaner user experiences, and practical behavior for web pages.</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon icon-cyan">04</div>
+      <h3>UI Refinement</h3>
+      <p>Improving spacing, alignment, typography, and section rhythm so pages feel more polished.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-tag">Projects</div>
+  <h2 class="section-title">
+    Selected work focused on clear<br>
+    storytelling and <span class="c-purple">polished</span><br>
+    <span class="c-pink">presentation.</span>
+  </h2>
+  <p class="section-desc">These concepts highlight the kind of clean, structured experiences I enjoy building for personal brands, services, and modern web showcases.</p>
+
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb thumb-pink">
+        <div class="arrow">↗</div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">Creative Website</div>
+        <div class="project-name">Studio Portfolio</div>
+        <p class="project-desc">A minimal showcase site for a creative professional, designed to highlight work and process without clutter.</p>
+        <div class="tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS Grid</span>
+          <span class="tag">Brand layout</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb thumb-blue">
+        <div class="arrow">↗</div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">Service Page</div>
+        <div class="project-name">Launch Landing</div>
+        <p class="project-desc">A focused landing page with strong content hierarchy, call-to-action sections, and responsive structure.</p>
+        <div class="tags">
+          <span class="tag">Landing Page</span>
+          <span class="tag">Responsive UI</span>
+          <span class="tag">Visual polish</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb thumb-pink">
+        <div class="arrow">↗</div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">Personal Brand</div>
+        <div class="project-name">Profile Website</div>
+        <p class="project-desc">A clean personal site built to introduce strengths, showcase work, and create a memorable first impression.</p>
+        <div class="tags">
+          <span class="tag">Portfolio</span>
+          <span class="tag">UI Layout</span>
+          <span class="tag">Content flow</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb thumb-blue">
+        <div class="arrow">↗</div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">Interface Refresh</div>
+        <div class="project-name">Dashboard UI</div>
+        <p class="project-desc">A refinement concept focused on cleaner spacing, clearer cards, and a more balanced visual rhythm.</p>
+        <div class="tags">
+          <span class="tag">Dashboard</span>
+          <span class="tag">UI cleanup</span>
+          <span class="tag">CSS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ 
+
+
+<section id="contact">
+  <div class="section-tag">Contact</div>
+  <div class="contact-card">
+    <h2 class="contact-title">
+      Let's build something <span class="c-purple">clear,</span><br>
+      <span class="c-pink">confident,</span> <span class="c-orange">and memorable.</span>
+    </h2>
+    <p class="contact-desc">If you need a portfolio, a landing page refresh, or help polishing an existing interface, I would love to hear what you want the site to communicate.</p>
+
+     
+</section>
+
+<footer>
+  <div class="footer-logo">Sudakar<span></span></div>
+  <div>© 2024 Sudakar · Frontend Developer</div>
+</footer>
+
+</body>
+</html>
